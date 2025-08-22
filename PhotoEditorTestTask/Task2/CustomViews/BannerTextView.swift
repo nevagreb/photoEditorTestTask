@@ -18,9 +18,9 @@ final class BannerLabel: UILabel {
         super.init(frame: .zero)
         switch type {
         case .title:
-            font = .systemFont(ofSize: BannerDesignSystem.FontSize.title, weight: .bold)
+            font = .systemFont(ofSize: DS.FontSize.title, weight: .bold)
         case .body:
-            font = .systemFont(ofSize: BannerDesignSystem.FontSize.body, weight: .regular)
+            font = .systemFont(ofSize: DS.FontSize.body, weight: .regular)
             alpha = 0.5
         }
         configure()

@@ -9,10 +9,10 @@ import UIKit
 
 final class CollageView: UIView {
     
-    let topLeftImage = BannerImageView(imageName: BannerDesignSystem.ImageName.topLeftImage)
-    let topRightImage = BannerImageView(imageName: BannerDesignSystem.ImageName.topRightImage)
-    let bottomLeftImage = BannerImageView(imageName: BannerDesignSystem.ImageName.bottomLeftImage)
-    let bottomRightImage = BannerImageView(imageName: BannerDesignSystem.ImageName.bottomRightImage)
+    let topLeftImage = BannerImageView(imageName: DS.Asset.topLeftBannerImage)
+    let topRightImage = BannerImageView(imageName: DS.Asset.topRightBannerImage)
+    let bottomLeftImage = BannerImageView(imageName: DS.Asset.bottomLeftBannerImage)
+    let bottomRightImage = BannerImageView(imageName: DS.Asset.bottomLeftBannerImage)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -31,7 +31,7 @@ final class CollageView: UIView {
         bottomLeftImage.translatesAutoresizingMaskIntoConstraints = false
         bottomRightImage.translatesAutoresizingMaskIntoConstraints = false
             
-        let padding = BannerDesignSystem.Padding.small
+        let padding = DS.Padding.s
         NSLayoutConstraint.activate([
             topLeftImage.topAnchor.constraint(equalTo: topAnchor),
             topLeftImage.leadingAnchor.constraint(equalTo: leadingAnchor),

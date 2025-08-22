@@ -28,9 +28,9 @@ final class BannerImageView: UIImageView {
         contentMode = .scaleAspectFill
         clipsToBounds = true
 
-        layer.cornerRadius = BannerDesignSystem.CornerRadius.small
+        layer.cornerRadius = DS.CornerRadius.s
         layer.cornerCurve = .continuous
-        layer.borderWidth = BannerDesignSystem.borderWidth
+        layer.borderWidth = DS.borderWidth
         layer.borderColor = UIColor.white.cgColor
     }
 

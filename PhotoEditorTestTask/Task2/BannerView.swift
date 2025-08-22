@@ -9,8 +9,8 @@ import UIKit
 
 final class BannerView: UIView {
     
-    let textStack = UIStackView()
-    let collage = CollageView()
+    private let textStack = UIStackView()
+    private let collage = CollageView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -32,7 +32,8 @@ final class BannerView: UIView {
     
     private func configureBannerView() {
         backgroundColor = .bannerBackground
-        layer.cornerRadius = BannerDesignSystem.CornerRadius.medium
+        layer.cornerRadius = DS.CornerRadius.m
+        layer.cornerCurve = .continuous
         clipsToBounds = true
     }
     
@@ -45,7 +46,7 @@ final class BannerView: UIView {
         textStack.addArrangedSubview(titleLabel)
         textStack.addArrangedSubview(bodyLabel)
         textStack.axis = .vertical
-        textStack.spacing = BannerDesignSystem.Padding.medium
+        textStack.spacing = DS.Padding.m
     }
     
     private func setConstraints() {
@@ -93,8 +94,11 @@ final class BannerView: UIView {
             collage.bottomAnchor.constraint(lessThanOrEqualTo: bottomPad.topAnchor),
             collage.centerYAnchor.constraint(equalTo: centerYAnchor),
 
-            textStack.trailingAnchor.constraint(equalTo: collage.leadingAnchor, constant: -BannerDesignSystem.Padding.medium),
+            textStack.trailingAnchor.constraint(equalTo: collage.leadingAnchor, constant: -DS.Padding.m),
             collage.heightAnchor.constraint(equalTo: collage.widthAnchor, multiplier: 0.81)
         ])
+        
+        textStack.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        collage.setContentCompressionResistancePriority(.required, for: .horizontal)
     }
 }
