@@ -33,7 +33,9 @@ final class BannerView: UIView {
     private func configureBannerView() {
         backgroundColor = .bannerBackground
         layer.cornerRadius = DS.CornerRadius.m
-        layer.cornerCurve = .continuous
+        if #available(iOS 13.0, *) {
+            layer.cornerCurve = .continuous
+        }
         clipsToBounds = true
     }
     
