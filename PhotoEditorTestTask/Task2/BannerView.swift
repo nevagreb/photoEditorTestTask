@@ -19,13 +19,6 @@ final class BannerView: UIView {
         setConstraints()
     }
     
-    init() {
-        super.init(frame: .zero)
-        configureBannerView()
-        configureTextStack()
-        setConstraints()
-    }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

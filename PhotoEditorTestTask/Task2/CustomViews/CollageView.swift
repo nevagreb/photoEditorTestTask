@@ -9,10 +9,10 @@ import UIKit
 
 final class CollageView: UIView {
     
-    let topLeftImage = BannerImageView(imageName: DS.Asset.topLeftBannerImage)
-    let topRightImage = BannerImageView(imageName: DS.Asset.topRightBannerImage)
-    let bottomLeftImage = BannerImageView(imageName: DS.Asset.bottomLeftBannerImage)
-    let bottomRightImage = BannerImageView(imageName: DS.Asset.bottomRightBannerImage)
+    private let topLeftImage = BannerImageView(imageName: DS.Asset.topLeftBannerImage)
+    private let topRightImage = BannerImageView(imageName: DS.Asset.topRightBannerImage)
+    private let bottomLeftImage = BannerImageView(imageName: DS.Asset.bottomLeftBannerImage)
+    private let bottomRightImage = BannerImageView(imageName: DS.Asset.bottomRightBannerImage)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
