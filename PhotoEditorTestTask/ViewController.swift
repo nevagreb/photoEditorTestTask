@@ -10,7 +10,6 @@ import UIKit
 class ViewController: UIViewController {
 
     //var banner = BannerView()
-    let gift = GiftView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,15 +24,13 @@ class ViewController: UIViewController {
 //            banner.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.13)
 //        ])
         
-        view.addSubview(gift)
-        gift.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            gift.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            gift.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            gift.widthAnchor.constraint(equalToConstant: 190),
-            gift.heightAnchor.constraint(equalToConstant: 190)
-
-        ])
+        
+        DispatchQueue.main.async {
+            let giftVC = GiftViewController()
+            giftVC.modalPresentationStyle = .overFullScreen
+            giftVC.modalTransitionStyle = .crossDissolve
+            self.present(giftVC, animated: true)
+        }
     }
 }
 

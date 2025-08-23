@@ -18,9 +18,9 @@ final class BannerLabel: UILabel {
         super.init(frame: .zero)
         switch type {
         case .title:
-            font = .systemFont(ofSize: DS.FontSize.title, weight: .bold)
+            font = .systemFont(ofSize: DS.FontSize.bannerTitle, weight: .bold)
         case .body:
-            font = .systemFont(ofSize: DS.FontSize.body, weight: .regular)
+            font = .systemFont(ofSize: DS.FontSize.bannerBody, weight: .regular)
             alpha = 0.5
         }
         configure()
@@ -36,7 +36,6 @@ final class BannerLabel: UILabel {
         numberOfLines = 0
         lineBreakMode = .byWordWrapping
         adjustsFontSizeToFitWidth = true
-        contentScaleFactor = 0.90
     }
     
     enum TextType {

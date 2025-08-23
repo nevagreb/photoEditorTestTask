@@ -13,6 +13,7 @@ struct DS {
     enum Padding {
         static let s: CGFloat = 6
         static let m: CGFloat = 8
+        static let l: CGFloat = 12
     }
     
     enum CornerRadius {
@@ -21,8 +22,9 @@ struct DS {
     }
     
     enum FontSize {
-        static let title: CGFloat = 17
-        static let body: CGFloat = 13
+        static let bannerTitle: CGFloat = 17
+        static let bannerBody: CGFloat = 13
+        static let giftFont: CGFloat = 22
     }
     
     enum Asset {
@@ -30,5 +32,12 @@ struct DS {
         static let topRightBannerImage = "bannerImage2"
         static let bottomLeftBannerImage = "bannerImage3"
         static let bottomRightBannerImage = "bannerImage4"
+        static let gift = "gift"
     }
+    
+    enum GiftContainerSizes {
+        static let minW: CGFloat = 140
+        static let maxW: CGFloat = 200
+    }
+    
 }
