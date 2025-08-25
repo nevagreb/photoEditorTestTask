@@ -7,10 +7,10 @@
 
 import UIKit
 
-class PhotoCollectionViewCell: UICollectionViewCell {
+final class PhotoCollectionViewCell: UICollectionViewCell {
     static let reusedId = "PhotoCell"
     
-    let photo = UIImageView()
+    private let imageView = UIImageView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -21,23 +21,28 @@ class PhotoCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func set(_ photoName: String) {
-        photo.image = UIImage(named: photoName)
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.image = nil
+    }
+    
+    func configure(with photo: Photo) {
+        imageView.image = UIImage(named: photo.name)
     }
     
     private func configure() {
-        photo.layer.cornerRadius = 14
-        photo.clipsToBounds = true
-        photo.contentMode = .scaleAspectFit
+        imageView.layer.cornerRadius = DS.CornerRadius.l
+        imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFill
         
-        contentView.addSubview(photo)
-        photo.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(imageView)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            photo.topAnchor.constraint(equalTo: contentView.topAnchor),
-            photo.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            photo.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            photo.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
         
     }

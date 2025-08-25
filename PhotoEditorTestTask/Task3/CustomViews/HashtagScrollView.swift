@@ -7,9 +7,9 @@
 
 import UIKit
 
-class HashtagView: UIView {
+class HashtagScrollView: UIView {
     private var label = UILabel()
-    private var buttons: [UIButton] = []
+    private var buttons: [HashtagButton] = []
     private var stack = UIStackView()
     private var scroll = UIScrollView()
     
@@ -24,26 +24,16 @@ class HashtagView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        stack.layoutIfNeeded()
-        buttons.forEach { button in
-            if #available(iOS 13.0, *) { button.layer.cornerCurve = .continuous }
-            button.layer.cornerRadius = button.bounds.height / 2
-            button.clipsToBounds = true
-        }
-    }
-    
     private func configure() {
         label.textColor = .white
-        label.font = .systemFont(ofSize: 12)
+        label.font = .systemFont(ofSize: DS.FontSize.hashTagTitle)
         label.textAlignment = .left
         label.text = "Подходит для:"
         
         scroll.showsHorizontalScrollIndicator = false
         
         stack.axis = .horizontal
-        stack.spacing = 4
+        stack.spacing = DS.Padding.xs
         stack.alignment = .center
     }
     
@@ -51,14 +41,14 @@ class HashtagView: UIView {
         addSubviews(label, scroll)
         scroll.addSubview(stack)
         
-        [label, scroll, stack].translatesAutoresizingMaskIntoConstraints()
-        
+        [label, scroll, stack].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+
         NSLayoutConstraint.activate([
-            label.topAnchor.constraint(equalTo: topAnchor, constant: 15),
+            label.topAnchor.constraint(equalTo: topAnchor),
             label.leadingAnchor.constraint(equalTo: leadingAnchor),
             label.trailingAnchor.constraint(equalTo: trailingAnchor),
             
-            scroll.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 8),
+            scroll.topAnchor.constraint(equalTo: label.bottomAnchor, constant: DS.Padding.m),
             scroll.leadingAnchor.constraint(equalTo: leadingAnchor),
             scroll.trailingAnchor.constraint(equalTo: trailingAnchor),
             scroll.bottomAnchor.constraint(equalTo: bottomAnchor),
@@ -75,12 +65,8 @@ class HashtagView: UIView {
     func addHashtags() {
         buttons.forEach { $0.removeFromSuperview() }
         buttons = (0...15).map {_ in
-            let button = UIButton()
+            let button = HashtagButton()
             button.setTitle("#Осень", for: .normal)
-            button.setTitleColor(.blueAccent, for: .normal)
-            button.titleLabel?.font = .systemFont(ofSize: 11, weight: .semibold)
-            button.contentEdgeInsets = UIEdgeInsets(top: 6, left: 12, bottom: 6, right: 12)
-            button.backgroundColor = .blueAccent?.withAlphaComponent(0.15)
             return button
         }
         buttons.forEach(stack.addArrangedSubview)

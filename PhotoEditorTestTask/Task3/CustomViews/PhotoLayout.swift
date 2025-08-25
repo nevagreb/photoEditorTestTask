@@ -26,6 +26,9 @@ final class PhotoLayout: UICollectionViewLayout {
         super.prepare()
         guard let collectionView else { return }
         
+        cache.removeAll(keepingCapacity: true)
+        contentHeight = 0
+        
         let columnWidth = (contentWidth - (CGFloat(numberOfColumns) - 1) * padding) / CGFloat(numberOfColumns)
         
         let xOffset = (0..<numberOfColumns).map {
@@ -38,7 +41,7 @@ final class PhotoLayout: UICollectionViewLayout {
                 let indexPath = IndexPath(item: item, section: section)
                 
                 let column = yOffset.enumerated().min(by: { $0.element < $1.element })!.offset
-                let height = itemHeights[indexPath] ?? 180
+                let height = itemHeights[indexPath] ?? DS.LayoutConstants.defaultItemHeight
                 
                 let frame = CGRect(x: xOffset[column],
                                    y: yOffset[column],
@@ -78,4 +81,21 @@ final class PhotoLayout: UICollectionViewLayout {
         contentHeight = 0
     }
     
+    func configureHeights(for photos: [Photo]) {
+        guard let collectionView else { return }
+        itemHeights.removeAll()
+        
+        let width = collectionView.bounds.width
+        let columnWidth = (width - CGFloat(numberOfColumns - 1) * padding) / CGFloat(numberOfColumns)
+        
+        for (i, photo) in photos.enumerated() {
+            if let image = UIImage(named: photo.name) {
+                let aspect = image.size.height / image.size.width
+                let height = columnWidth * aspect
+                itemHeights[IndexPath(item: i, section: 0)] = height
+            }
+        }
+        
+        invalidateLayout()
+    }
 }

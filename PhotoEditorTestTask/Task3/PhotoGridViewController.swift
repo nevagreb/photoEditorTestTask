@@ -9,34 +9,23 @@ import UIKit
 
 final class PhotoGridViewController: UIViewController {
     
-    private var hashTagsView = HashtagView()
-    private var photos: [String] = []
+    private var hashTagsView = HashtagScrollView()
+    private var photos: [Photo] = []
     private var collectionView: UICollectionView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
         configureCollectionView()
-        setConstraints()
+        setupConstraints()
+        loadData()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
-        guard let layout = collectionView.collectionViewLayout as? PhotoLayout else { return }
-        layout.itemHeights.removeAll()
-        
-        let columnWidth = (collectionView.bounds.width - CGFloat(layout.numberOfColumns - 1) * layout.padding) / CGFloat(layout.numberOfColumns)
-        
-        for (i, name) in photos.enumerated() {
-            if let image = UIImage(named: name) {
-                let aspect = image.size.height / image.size.width
-                let height = columnWidth * aspect
-                layout.itemHeights[IndexPath(item: i, section: 0)] = height
-            }
+        if let layout = collectionView.collectionViewLayout as? PhotoLayout {
+            layout.configureHeights(for: photos)
         }
-        
-        layout.invalidateLayout()
     }
     
     private func configureView() {
@@ -45,28 +34,32 @@ final class PhotoGridViewController: UIViewController {
     
     private func configureCollectionView() {
         let layout = PhotoLayout()
-        
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: PhotoCollectionViewCell.reusedId)
         collectionView.dataSource = self
-        collectionView.backgroundColor = .black
+        collectionView.backgroundColor = .clear
     }
     
-    private func setConstraints() {
+    private func setupConstraints() {
         view.addSubviews(hashTagsView, collectionView)
         
-        [hashTagsView, collectionView].translatesAutoresizingMaskIntoConstraints()
+        [hashTagsView, collectionView].forEach { $0.translatesAutoresizingMaskIntoConstraints = false}
         
         NSLayoutConstraint.activate([
-            hashTagsView.topAnchor.constraint(equalTo: view.topAnchor, constant: 80),
+            hashTagsView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             hashTagsView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             hashTagsView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             
-            collectionView.topAnchor.constraint(equalTo: hashTagsView.bottomAnchor, constant: 12),
+            collectionView.topAnchor.constraint(equalTo: hashTagsView.bottomAnchor, constant: DS.Padding.l),
             collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+    }
+    
+    // MARK: - load data
+    private func loadData() {
+        photos += Photo.mockData() + Photo.mockData()
     }
 }
 
@@ -76,8 +69,15 @@ extension PhotoGridViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.reusedId, for: indexPath) as! PhotoCollectionViewCell
-        cell.set(photos[indexPath.row])
+        
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: PhotoCollectionViewCell.reusedId,
+            for: indexPath
+        ) as? PhotoCollectionViewCell else {
+            fatalError("Cannot dequeue PhotoCollectionViewCell")
+        }
+        
+        cell.configure(with: photos[indexPath.row])
         return cell
-    } 
+    }
 }
