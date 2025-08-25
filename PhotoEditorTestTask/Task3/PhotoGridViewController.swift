@@ -9,7 +9,7 @@ import UIKit
 
 final class PhotoGridViewController: UIViewController {
     
-    private var hashTagsView = HashtagScrollView()
+    private var hashtagsView = HashtagScrollView()
     private var photos: [Photo] = []
     private var collectionView: UICollectionView!
 
@@ -41,16 +41,17 @@ final class PhotoGridViewController: UIViewController {
     }
     
     private func setupConstraints() {
-        view.addSubviews(hashTagsView, collectionView)
+        view.addSubviews(hashtagsView, collectionView)
         
-        [hashTagsView, collectionView].forEach { $0.translatesAutoresizingMaskIntoConstraints = false}
+        [hashtagsView, collectionView].forEach { $0.translatesAutoresizingMaskIntoConstraints = false}
         
         NSLayoutConstraint.activate([
-            hashTagsView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            hashTagsView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            hashTagsView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            hashtagsView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            hashtagsView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            hashtagsView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            hashtagsView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             
-            collectionView.topAnchor.constraint(equalTo: hashTagsView.bottomAnchor, constant: DS.Padding.l),
+            collectionView.topAnchor.constraint(equalTo: hashtagsView.bottomAnchor, constant: DS.Padding.l),
             collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)

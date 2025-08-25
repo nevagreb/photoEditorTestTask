@@ -10,7 +10,6 @@ import UIKit
 final class GiftViewController: UIViewController {
     private let giftImageView = UIImageView()
     private let timerLabel = UILabel()
-    private let container = UIView()
     private let stack = UIStackView()
 
     private var timer: Timer?
@@ -34,15 +33,15 @@ final class GiftViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        container.layer.cornerRadius = container.bounds.width/2
+        view.layer.cornerRadius = view.bounds.width/2
     }
     
     deinit { stopTimer() }
     
     private func configureContainer() {
-        container.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-        container.clipsToBounds = true
-        if #available(iOS 13.0, *) { container.layer.cornerCurve = .continuous }
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        view.clipsToBounds = true
+        if #available(iOS 13.0, *) { view.layer.cornerCurve = .continuous }
     }
     
     private func configureGiftImage() {
@@ -55,12 +54,13 @@ final class GiftViewController: UIViewController {
         timerLabel.textColor = .white
         timerLabel.font = .monospacedDigitSystemFont(ofSize: 22, weight: .semibold)
         timerLabel.adjustsFontForContentSizeCategory = true
-        timerLabel.minimumScaleFactor = 0.7
+        timerLabel.minimumScaleFactor = 0.5
+        timerLabel.adjustsFontSizeToFitWidth = true
+        timerLabel.numberOfLines = 1
     }
     
     private func setConstraints() {
-        view.addSubview(container)
-        container.addSubview(stack)
+        view.addSubview(stack)
         stack.axis = .vertical
         stack.alignment = .center
         stack.spacing = DS.Padding.s
@@ -68,31 +68,24 @@ final class GiftViewController: UIViewController {
         stack.addArrangedSubview(giftImageView)
         stack.addArrangedSubview(timerLabel)
         
-        [container, stack, giftImageView, timerLabel].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+        [stack, giftImageView, timerLabel].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         
         NSLayoutConstraint.activate([
-            container.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            container.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            container.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.44),
-            container.heightAnchor.constraint(equalTo: container.widthAnchor),
+            stack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            stack.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -DS.Padding.m),
+            stack.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: DS.Padding.l),
+            stack.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -DS.Padding.l),
             
-            stack.centerXAnchor.constraint(equalTo: container.centerXAnchor),
-            stack.centerYAnchor.constraint(equalTo: container.centerYAnchor, constant: -DS.Padding.m),
-            stack.leadingAnchor.constraint(greaterThanOrEqualTo: container.leadingAnchor, constant: DS.Padding.l),
-            stack.trailingAnchor.constraint(lessThanOrEqualTo: container.trailingAnchor, constant: -DS.Padding.l),
+            giftImageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.63),
+            giftImageView.heightAnchor.constraint(equalTo: giftImageView.widthAnchor),
             
-            giftImageView.widthAnchor.constraint(equalTo: container.widthAnchor, multiplier: 0.63),
-            giftImageView.heightAnchor.constraint(equalTo: giftImageView.widthAnchor)
+            view.heightAnchor.constraint(equalTo: view.widthAnchor)
         ])
         
         addPriorities()
     }
     
     private func addPriorities() {
-        let minW = container.widthAnchor.constraint(greaterThanOrEqualToConstant: DS.GiftContainerSizes.minW)
-        let maxW = container.widthAnchor.constraint(lessThanOrEqualToConstant: DS.GiftContainerSizes.maxW)
-        [minW, maxW].forEach { $0.priority = .defaultHigh; $0.isActive = true }
-        
         giftImageView.setContentCompressionResistancePriority(.required, for: .vertical)
         timerLabel.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
     }

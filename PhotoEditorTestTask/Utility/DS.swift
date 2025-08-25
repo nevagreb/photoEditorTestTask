@@ -15,6 +15,7 @@ struct DS {
         static let s: CGFloat = 6
         static let m: CGFloat = 8
         static let l: CGFloat = 12
+        static let xl: CGFloat = 15
     }
     
     enum CornerRadius {
