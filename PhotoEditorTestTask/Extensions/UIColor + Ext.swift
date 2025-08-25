@@ -10,6 +10,7 @@ import UIKit
 extension UIColor {
     
     static let bannerBackground = UIColor(hex: "#8B67EF")
+    static let blueAccent = UIColor(hex: "#64D2FF")
 
     convenience init?(hex: String, alpha: CGFloat = 1.0) {
         var hexSanitized = hex.trimmingCharacters(in: .whitespacesAndNewlines)
