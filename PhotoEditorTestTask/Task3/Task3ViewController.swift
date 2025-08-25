@@ -7,7 +7,12 @@
 
 import UIKit
 
-final class Task3ViewController: UIViewController {
+protocol DataSourceble: AnyObject {
+    func getHashtags() -> [Hashtag]
+    func getPhotos() -> [Photo]
+}
+
+final class Task3ViewController: UIViewController, DataSourceble {
     
     private let bannerView = BannerView()
     private let photoVC = PhotoGridViewController()
@@ -21,6 +26,7 @@ final class Task3ViewController: UIViewController {
     
     private func setupView() {
         view.backgroundColor = .black
+        photoVC.delegate = self
     }
     
     private func configureConstraint() {
@@ -40,7 +46,7 @@ final class Task3ViewController: UIViewController {
             bannerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             bannerView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.13),
 
-            photoVC.view.topAnchor.constraint(equalTo: bannerView.bottomAnchor, constant: 15),
+            photoVC.view.topAnchor.constraint(equalTo: bannerView.bottomAnchor, constant: DS.Padding.xl),
             photoVC.view.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             photoVC.view.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             photoVC.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -54,6 +60,15 @@ final class Task3ViewController: UIViewController {
         
         photoVC.didMove(toParent: self)
         giftBannerVC.didMove(toParent: self)
+    }
+    
+    // MARK: - get data func
+    func getHashtags() -> [Hashtag] {
+        return Hashtag.mockData()
+    }
+    
+    func getPhotos() -> [Photo] {
+        return Photo.mockData() + Photo.mockData()
     }
 }
 

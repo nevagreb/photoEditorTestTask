@@ -8,11 +8,12 @@
 import UIKit
 
 final class PhotoGridViewController: UIViewController {
+    weak var delegate: DataSourceble?
     
     private var hashtagsView = HashtagScrollView()
     private var photos: [Photo] = []
     private var collectionView: UICollectionView!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
@@ -60,7 +61,7 @@ final class PhotoGridViewController: UIViewController {
     
     // MARK: - load data
     private func loadData() {
-        photos += Photo.mockData() + Photo.mockData()
+        photos = delegate?.getPhotos() ?? []
     }
 }
 
