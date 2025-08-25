@@ -74,7 +74,7 @@ class HashtagView: UIView {
     
     func addHashtags() {
         buttons.forEach { $0.removeFromSuperview() }
-        buttons = (0...5).map {_ in
+        buttons = (0...15).map {_ in
             let button = UIButton()
             button.setTitle("#Осень", for: .normal)
             button.setTitleColor(.blueAccent, for: .normal)
