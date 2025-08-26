@@ -46,7 +46,7 @@ final class PhotoGridView: UIView, UICollectionViewDataSource, PhotoLayoutDelega
             hashtagsView.leadingAnchor.constraint(equalTo: leadingAnchor),
             hashtagsView.trailingAnchor.constraint(equalTo: trailingAnchor),
             
-            collectionView.topAnchor.constraint(equalTo: hashtagsView.bottomAnchor, constant: DS.Padding.l),
+            collectionView.topAnchor.constraint(equalTo: hashtagsView.bottomAnchor, constant: DS.Padding.padding12),
             collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: bottomAnchor)

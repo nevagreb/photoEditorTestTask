@@ -9,6 +9,7 @@ protocol Task3Displaying: AnyObject {
     func showGift(gift: GiftDTO)
 }
 
+// UIKit screen. Handles layout only, data-loading logic is in the presenter
 final class Task3ViewController: UIViewController, Task3Displaying {
     
     var presenter: Task3Presenting!
@@ -25,9 +26,7 @@ final class Task3ViewController: UIViewController, Task3Displaying {
     }
     
     private func setupConstraint() {
-        view.addSubview(bannerView)
-        view.addSubview(photoGridView)
-        view.addSubview(giftView)
+        view.addSubviews(bannerView, photoGridView, giftView)
         
         [bannerView, photoGridView, giftView].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         
@@ -35,9 +34,9 @@ final class Task3ViewController: UIViewController, Task3Displaying {
             bannerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             bannerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             bannerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            bannerView.heightAnchor.constraint(equalToConstant: 108),
-
-            photoGridView.topAnchor.constraint(equalTo: bannerView.bottomAnchor, constant: DS.Padding.xl),
+            bannerView.heightAnchor.constraint(equalToConstant: DS.LayoutConstants.bannerStandartHeight),
+            
+            photoGridView.topAnchor.constraint(equalTo: bannerView.bottomAnchor, constant: DS.Padding.padding15),
             photoGridView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             photoGridView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             photoGridView.bottomAnchor.constraint(equalTo: view.bottomAnchor),

@@ -20,7 +20,7 @@ final class Task1ViewController: UIViewController {
         NSLayoutConstraint.activate([
             giftView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             giftView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            giftView.widthAnchor.constraint(equalToConstant: 168)
+            giftView.widthAnchor.constraint(equalToConstant: DS.LayoutConstants.giftStandartHeight)
         ])
     }
     

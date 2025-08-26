@@ -1,9 +1,4 @@
-//
-//  BannerDTO.swift
-//  PhotoEditorTestTask
-//
 //  Created by Kristina Grebneva on 26.08.2025.
-//
 
 import Foundation
 
@@ -16,8 +11,8 @@ struct BannerDTO {
     let bottomRightBannerImage: String
     
     static var mockData: Self {
-        BannerDTO(title: "Try three days free trial",
-                  body: "You will get all premium templates, additional stickers and no ads",
+        BannerDTO(title: DS.BannerText.title,
+                  body: DS.BannerText.body,
                   topLeftBannerImage: DS.Asset.topLeftBannerImage,
                   topRightBAnnerImage: DS.Asset.topRightBannerImage,
                   bottomLeftBannerImage: DS.Asset.bottomLeftBannerImage,

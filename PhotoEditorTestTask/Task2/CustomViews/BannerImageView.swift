@@ -22,7 +22,7 @@ final class BannerImageView: UIImageView {
         contentMode = .scaleAspectFill
         clipsToBounds = true
 
-        layer.cornerRadius = DS.CornerRadius.s
+        layer.cornerRadius = DS.CornerRadius.radius3
         if #available(iOS 13.0, *) {
             layer.cornerCurve = .continuous
         }

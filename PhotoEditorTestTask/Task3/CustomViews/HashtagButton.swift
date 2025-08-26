@@ -16,7 +16,7 @@ final class HashtagButton: UIButton {
     private func configure() {
         setTitleColor(.blueAccent, for: .normal)
         titleLabel?.font = .systemFont(ofSize: DS.FontSize.hashTag, weight: .semibold)
-        contentEdgeInsets = UIEdgeInsets(top: DS.Padding.s, left: DS.Padding.l, bottom: DS.Padding.s, right: DS.Padding.l)
+        contentEdgeInsets = UIEdgeInsets(top: DS.Padding.padding6, left: DS.Padding.padding12, bottom: DS.Padding.padding6, right: DS.Padding.padding12)
         backgroundColor = .blueAccent?.withAlphaComponent(0.15) ?? UIColor.blue
     }
     

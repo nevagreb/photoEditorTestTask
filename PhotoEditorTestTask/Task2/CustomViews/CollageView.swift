@@ -26,7 +26,7 @@ final class CollageView: UIView {
         bottomLeftImageView.translatesAutoresizingMaskIntoConstraints = false
         bottomRightImageView.translatesAutoresizingMaskIntoConstraints = false
             
-        let padding = DS.Padding.s
+        let padding = DS.Padding.padding6
         NSLayoutConstraint.activate([
             topLeftImageView.topAnchor.constraint(equalTo: topAnchor),
             topLeftImageView.leadingAnchor.constraint(equalTo: leadingAnchor),

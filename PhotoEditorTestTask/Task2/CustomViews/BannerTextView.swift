@@ -34,7 +34,7 @@ final class BannerLabel: UILabel {
         lineBreakMode = .byWordWrapping
     }
     
-    private func addSpacing(_ spacing: CGFloat = 3) {
+    private func addSpacing(_ spacing: CGFloat = DS.TextSpacing.small) {
         guard let text, !text.isEmpty else {
             attributedText = nil
             return

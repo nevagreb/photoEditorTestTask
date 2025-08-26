@@ -20,14 +20,14 @@ final class HashtagsView: UIView {
     
     private func configure() {
         label.textColor = .white
-        label.font = .systemFont(ofSize: DS.FontSize.hashTagTitle)
+        label.font = .systemFont(ofSize: DS.FontSize.hashTag)
         label.textAlignment = .left
         label.text = "Подходит для:"
         
         scroll.showsHorizontalScrollIndicator = false
         
         stack.axis = .horizontal
-        stack.spacing = DS.Padding.xs
+        stack.spacing = DS.Padding.padding4
         stack.alignment = .center
     }
     
@@ -42,7 +42,7 @@ final class HashtagsView: UIView {
             label.leadingAnchor.constraint(equalTo: leadingAnchor),
             label.trailingAnchor.constraint(equalTo: trailingAnchor),
             
-            scroll.topAnchor.constraint(equalTo: label.bottomAnchor, constant: DS.Padding.m),
+            scroll.topAnchor.constraint(equalTo: label.bottomAnchor, constant: DS.Padding.padding8),
             scroll.leadingAnchor.constraint(equalTo: leadingAnchor),
             scroll.trailingAnchor.constraint(equalTo: trailingAnchor),
             scroll.bottomAnchor.constraint(equalTo: bottomAnchor),

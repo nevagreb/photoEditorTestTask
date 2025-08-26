@@ -2,6 +2,7 @@
 
 import Foundation
 
+// Data abstraction for the screen
 protocol NetworkService {
     func fetchBanner() -> BannerDTO
     func fetchGift() -> GiftDTO
@@ -9,6 +10,7 @@ protocol NetworkService {
     func fetchHashtags() -> [Hashtag]
 }
 
+// Mock implementation: returns static stub data immediately
 final class MockNetworkService: NetworkService {
 
     func fetchBanner() -> BannerDTO {
@@ -20,10 +22,10 @@ final class MockNetworkService: NetworkService {
     }
     
     func fetchPhotos() -> [Photo] {
-        Photo.mockData
+        return Photo.mockData
     }
     
     func fetchHashtags() -> [Hashtag] {
-        Hashtag.mockData
+        return Hashtag.mockData
     }
 }

@@ -46,7 +46,7 @@ final class GiftView: UIView {
     
     private func configureTimerLabel() {
         timerLabel.textColor = .white
-        timerLabel.font = .monospacedDigitSystemFont(ofSize: 22, weight: .semibold)
+        timerLabel.font = .monospacedDigitSystemFont(ofSize: DS.FontSize.giftFont, weight: .semibold)
         timerLabel.minimumScaleFactor = 0.5
         timerLabel.adjustsFontSizeToFitWidth = true
         timerLabel.numberOfLines = 1
@@ -144,7 +144,7 @@ final class GiftView: UIView {
         timer = nil
     }
 
-// MARK: - animation
+    // MARK: - animation
     private func animateGift() {
         rotate(times: 3)
     }

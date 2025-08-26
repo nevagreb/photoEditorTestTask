@@ -13,7 +13,7 @@ final class PhotoLayout: UICollectionViewLayout {
     weak var delegate: PhotoLayoutDelegate?
 
     let numberOfColumns = 2
-    let padding = DS.Padding.m
+    let padding: CGFloat = DS.Padding.padding8
     
     private var cache: [UICollectionViewLayoutAttributes] = []
     private var contentHeight: CGFloat = 0

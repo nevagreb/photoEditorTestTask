@@ -22,7 +22,7 @@ final class BannerView: UIView {
     
     private func configureBannerView() {
         backgroundColor = .bannerBackground
-        layer.cornerRadius = DS.CornerRadius.m
+        layer.cornerRadius = DS.CornerRadius.radius12
         if #available(iOS 13.0, *) {
             layer.cornerCurve = .continuous
         }
@@ -33,7 +33,7 @@ final class BannerView: UIView {
         textStack.addArrangedSubview(titleLabel)
         textStack.addArrangedSubview(bodyLabel)
         textStack.axis = .vertical
-        textStack.spacing = DS.Padding.m
+        textStack.spacing = DS.Padding.padding8
     }
     
     private func setConstraints() {
@@ -43,13 +43,13 @@ final class BannerView: UIView {
 
         NSLayoutConstraint.activate([
             textStack.centerYAnchor.constraint(equalTo: centerYAnchor),
-            textStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            textStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: DS.Padding.padding20),
             textStack.trailingAnchor.constraint(lessThanOrEqualTo: collage.leadingAnchor),
             
             collage.centerYAnchor.constraint(equalTo: centerYAnchor),
-            collage.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -19),
-            collage.widthAnchor.constraint(equalToConstant: 98),
-            collage.heightAnchor.constraint(equalToConstant: 80),
+            collage.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -DS.Padding.padding19),
+            collage.widthAnchor.constraint(equalToConstant: DS.LayoutConstants.collageStandartWidth),
+            collage.heightAnchor.constraint(equalToConstant: DS.LayoutConstants.collageStandartHeight),
         ])
         
         textStack.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)

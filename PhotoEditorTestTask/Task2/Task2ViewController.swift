@@ -20,7 +20,7 @@ final class Task2ViewController: UIViewController {
             banner.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             banner.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             banner.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            banner.heightAnchor.constraint(equalToConstant: 108)
+            banner.heightAnchor.constraint(equalToConstant: DS.LayoutConstants.bannerStandartHeight)
         ])
     }
 

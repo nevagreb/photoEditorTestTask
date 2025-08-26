@@ -26,7 +26,7 @@ final class PhotoCollectionViewCell: UICollectionViewCell {
     }
     
     private func configure() {
-        imageView.layer.cornerRadius = DS.CornerRadius.l
+        imageView.layer.cornerRadius = DS.CornerRadius.radius14
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
         

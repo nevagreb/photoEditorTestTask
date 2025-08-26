@@ -7,12 +7,8 @@ struct Hashtag {
     let text: String
     
     static var mockData: [Self] {
-        return [Hashtag(text: "#Осень"),
-                Hashtag(text: "#Портрет"),
-                Hashtag(text: "#Insta-стиль"),
-                Hashtag(text: "#Люди"),
-                Hashtag(text: "#Природа"),
-                Hashtag(text: "#Кофе"),
-                Hashtag(text: "#Горы")]
+        var hashtags: [Hashtag] = []
+        DS.Hashtag.titles.forEach { hashtags.append(Hashtag(text: "#\($0)")) }
+        return hashtags
     }
 }
