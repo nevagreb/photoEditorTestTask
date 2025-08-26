@@ -90,9 +90,12 @@ final class PhotoGridView: UIView, UICollectionViewDataSource, PhotoLayoutDelega
         }
     
     // MARK: - configure with data
-    @MainActor
     func setPhotos(_ photos: [Photo]) {
         aspectCache.removeAllObjects()
         self.photos = photos
+    }
+    
+    func setHashtags(_ hashtags: [Hashtag]) {
+        hashtagsView.сongigure(with: hashtags)
     }
 }

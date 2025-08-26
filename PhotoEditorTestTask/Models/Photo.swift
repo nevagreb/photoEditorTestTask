@@ -6,9 +6,18 @@ struct Photo {
     let id = UUID()
     let name: String
     
-    static func mockData() -> [Self] {
-        (1..<6).map { i in
-            Photo(name: "photo\(i)")
-        }
+    static var mockData: [Self] {
+        return [Photo(name: "photo1"),
+                Photo(name: "photo2"),
+                Photo(name: "photo3"),
+                Photo(name: "photo4"),
+                Photo(name: "photo5"),
+                Photo(name: "photo6"),
+                Photo(name: "photo1"),
+                Photo(name: "photo2"),
+                Photo(name: "photo3"),
+                Photo(name: "photo4"),
+                Photo(name: "photo5"),
+                Photo(name: "photo6")]
     }
 }

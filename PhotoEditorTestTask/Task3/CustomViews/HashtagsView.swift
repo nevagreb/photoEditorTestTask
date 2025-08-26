@@ -12,7 +12,6 @@ final class HashtagsView: UIView {
         super.init(frame: frame)
         configure()
         setConstraints()
-        addHashtags()
     }
     
     required init?(coder: NSCoder) {
@@ -57,11 +56,12 @@ final class HashtagsView: UIView {
         ])
     }
     
-    func addHashtags() {
+    // MARK: - configure with data
+    func сongigure(with hashtags: [Hashtag]) {
         buttons.forEach { $0.removeFromSuperview() }
-        buttons = (0...15).map {_ in
+        buttons = hashtags.map { hashtag in
             let button = HashtagButton()
-            button.setTitle("#Осень", for: .normal)
+            button.setTitle(hashtag.text, for: .normal)
             return button
         }
         buttons.forEach(stack.addArrangedSubview)

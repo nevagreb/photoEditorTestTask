@@ -5,6 +5,8 @@ import UIKit
 final class BannerView: UIView {
     
     private let textStack = UIStackView()
+    private let titleLabel = BannerLabel(type: .title)
+    private let bodyLabel = BannerLabel(type: .body)
     private let collage = CollageView()
     
     override init(frame: CGRect) {
@@ -28,11 +30,6 @@ final class BannerView: UIView {
     }
     
     private func configureTextStack() {
-        let titleLabel = BannerLabel(type: .title)
-        titleLabel.text = "Try three days free trial"
-        let bodyLabel = BannerLabel(type: .body)
-        bodyLabel.text = "You will get all premium templates, additional stickers and no ads"
-        
         textStack.addArrangedSubview(titleLabel)
         textStack.addArrangedSubview(bodyLabel)
         textStack.axis = .vertical
@@ -57,5 +54,15 @@ final class BannerView: UIView {
         
         textStack.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         collage.setContentCompressionResistancePriority(.required, for: .horizontal)
+    }
+    
+    // MARK: - configure with data
+    func configure(with banner: BannerDTO) {
+        titleLabel.text = banner.title
+        bodyLabel.text = banner.body
+        collage.configure(topLeftImage: banner.topLeftBannerImage,
+                          topRightImage: banner.topRightBAnnerImage,
+                          bottomLeftImage: banner.bottomLeftBannerImage,
+                          bottomRightImageL: banner.bottomRightBannerImage)
     }
 }

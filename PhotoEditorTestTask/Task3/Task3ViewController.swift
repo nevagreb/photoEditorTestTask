@@ -2,8 +2,17 @@
 
 import UIKit
 
-final class Task3ViewController: UIViewController {
+protocol Task3Displaying: AnyObject {
+    func showBanner(banner: BannerDTO)
+    func showPhotos(_ photos: [Photo])
+    func showHashtags(_ hashtags: [Hashtag])
+    func showGift(gift: GiftDTO)
+}
+
+final class Task3ViewController: UIViewController, Task3Displaying {
     
+    var presenter: Task3Presenting!
+
     private let bannerView = BannerView()
     private let photoGridView = PhotoGridView()
     private let giftView = GiftView()
@@ -12,7 +21,7 @@ final class Task3ViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .black
         setupConstraint()
-        photoGridView.setPhotos(Photo.mockData())
+        presenter.viewDidLoad()
     }
     
     private func setupConstraint() {
@@ -38,6 +47,23 @@ final class Task3ViewController: UIViewController {
             giftView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.25)
         ])
     }
+    
+    func showBanner(banner: BannerDTO) {
+        bannerView.configure(with: banner)
+    }
+    
+    func showPhotos(_ photos: [Photo]) {
+        photoGridView.setPhotos(photos)
+    }
+    
+    func showHashtags(_ hashtags: [Hashtag]) {
+        photoGridView.setHashtags(hashtags)
+    }
+    
+    func showGift(gift: GiftDTO) {
+        giftView.configure(with: gift)
+    }
 }
+
 
 

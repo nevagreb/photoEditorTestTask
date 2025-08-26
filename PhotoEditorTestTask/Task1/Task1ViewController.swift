@@ -10,7 +10,7 @@ final class Task1ViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupConstraints()
-        giftView.startTimer(minutes: 30)
+        giftView.configure(with: GiftDTO.mockData)
     }
     
     private func setupConstraints() {

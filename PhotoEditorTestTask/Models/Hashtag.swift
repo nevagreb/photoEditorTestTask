@@ -6,9 +6,13 @@ struct Hashtag {
     let id = UUID()
     let text: String
     
-    static func mockData() -> [Self] {
-        (1..<6).map { i in
-            Hashtag(text: "Осень")
-        }
+    static var mockData: [Self] {
+        return [Hashtag(text: "#Осень"),
+                Hashtag(text: "#Портрет"),
+                Hashtag(text: "#Insta-стиль"),
+                Hashtag(text: "#Люди"),
+                Hashtag(text: "#Природа"),
+                Hashtag(text: "#Кофе"),
+                Hashtag(text: "#Горы")]
     }
 }

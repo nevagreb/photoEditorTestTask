@@ -16,7 +16,6 @@ final class GiftView: UIView {
         configureGiftImage()
         configureTimerLabel()
         setConstraints()
-        animateGift()
     }
     
     required init?(coder: NSCoder) {
@@ -105,7 +104,7 @@ final class GiftView: UIView {
     }
     
     // MARK: - timer logic
-    func startTimer(hours: Int = 0, minutes: Int = 0, seconds: Int = 0) {
+    private func startTimer(hours: Int = 0, minutes: Int = 0, seconds: Int = 0) {
         let time = hours*3600 + minutes*60 + seconds
         endDate = Date().addingTimeInterval(TimeInterval(time))
         updateLabel()
@@ -174,4 +173,12 @@ final class GiftView: UIView {
             })
         })
     }
+    
+    // MARK: - configure with data
+    func configure(with gift: GiftDTO) {
+        startTimer(hours: gift.hours ?? 0, minutes: gift.minutes ?? 0, seconds: gift.seconds ?? 0)
+        animateGift()
+    }
 }
+
+

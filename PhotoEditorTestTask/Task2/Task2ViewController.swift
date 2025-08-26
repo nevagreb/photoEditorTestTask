@@ -9,6 +9,7 @@ final class Task2ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupConstraints()
+        banner.configure(with: BannerDTO.mockData)
     }
     
     private func setupConstraints() {

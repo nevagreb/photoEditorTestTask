@@ -4,10 +4,10 @@ import UIKit
 
 final class CollageView: UIView {
     
-    private let topLeftImage = BannerImageView(imageName: DS.Asset.topLeftBannerImage)
-    private let topRightImage = BannerImageView(imageName: DS.Asset.topRightBannerImage)
-    private let bottomLeftImage = BannerImageView(imageName: DS.Asset.bottomLeftBannerImage)
-    private let bottomRightImage = BannerImageView(imageName: DS.Asset.bottomRightBannerImage)
+    private let topLeftImageView = BannerImageView()
+    private let topRightImageView = BannerImageView()
+    private let bottomLeftImageView = BannerImageView()
+    private let bottomRightImageView = BannerImageView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -19,35 +19,46 @@ final class CollageView: UIView {
     }
     
     private func configure() {
-        addSubviews(topLeftImage, topRightImage, bottomLeftImage, bottomRightImage)
+        addSubviews(topLeftImageView, topRightImageView, bottomLeftImageView, bottomRightImageView)
         
-        topLeftImage.translatesAutoresizingMaskIntoConstraints = false
-        topRightImage.translatesAutoresizingMaskIntoConstraints = false
-        bottomLeftImage.translatesAutoresizingMaskIntoConstraints = false
-        bottomRightImage.translatesAutoresizingMaskIntoConstraints = false
+        topLeftImageView.translatesAutoresizingMaskIntoConstraints = false
+        topRightImageView.translatesAutoresizingMaskIntoConstraints = false
+        bottomLeftImageView.translatesAutoresizingMaskIntoConstraints = false
+        bottomRightImageView.translatesAutoresizingMaskIntoConstraints = false
             
         let padding = DS.Padding.s
         NSLayoutConstraint.activate([
-            topLeftImage.topAnchor.constraint(equalTo: topAnchor),
-            topLeftImage.leadingAnchor.constraint(equalTo: leadingAnchor),
-            topLeftImage.bottomAnchor.constraint(equalTo: bottomLeftImage.topAnchor, constant: -padding),
-            topLeftImage.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5, constant: -0.5*padding),
+            topLeftImageView.topAnchor.constraint(equalTo: topAnchor),
+            topLeftImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            topLeftImageView.bottomAnchor.constraint(equalTo: bottomLeftImageView.topAnchor, constant: -padding),
+            topLeftImageView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5, constant: -0.5*padding),
             
-            topRightImage.topAnchor.constraint(equalTo: topAnchor),
-            topRightImage.trailingAnchor.constraint(equalTo: trailingAnchor),
-            topRightImage.leadingAnchor.constraint(equalTo: topLeftImage.trailingAnchor, constant: padding),
-            topRightImage.heightAnchor.constraint(equalTo: topRightImage.widthAnchor, multiplier: 0.5),
+            topRightImageView.topAnchor.constraint(equalTo: topAnchor),
+            topRightImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            topRightImageView.leadingAnchor.constraint(equalTo: topLeftImageView.trailingAnchor, constant: padding),
+            topRightImageView.heightAnchor.constraint(equalTo: topRightImageView.widthAnchor, multiplier: 0.5),
 
-            bottomLeftImage.bottomAnchor.constraint(equalTo: bottomAnchor),
-            bottomLeftImage.leadingAnchor.constraint(equalTo: leadingAnchor),
-            bottomLeftImage.trailingAnchor.constraint(equalTo: bottomRightImage.leadingAnchor, constant: -padding),
-            bottomLeftImage.heightAnchor.constraint(equalTo: bottomLeftImage.widthAnchor, multiplier: 0.5),
+            bottomLeftImageView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            bottomLeftImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            bottomLeftImageView.trailingAnchor.constraint(equalTo: bottomRightImageView.leadingAnchor, constant: -padding),
+            bottomLeftImageView.heightAnchor.constraint(equalTo: bottomLeftImageView.widthAnchor, multiplier: 0.5),
             
-            bottomRightImage.topAnchor.constraint(equalTo: topRightImage.bottomAnchor, constant: padding),
-            bottomRightImage.trailingAnchor.constraint(equalTo: trailingAnchor),
-            bottomRightImage.bottomAnchor.constraint(equalTo: bottomAnchor),
-            bottomRightImage.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5, constant: -0.5*padding)
+            bottomRightImageView.topAnchor.constraint(equalTo: topRightImageView.bottomAnchor, constant: padding),
+            bottomRightImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            bottomRightImageView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            bottomRightImageView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5, constant: -0.5*padding)
         ])
+    }
+    
+    // MARK: - configure with data
+    func configure(topLeftImage: String,
+                   topRightImage: String,
+                   bottomLeftImage: String,
+                   bottomRightImageL: String) {
+        self.topLeftImageView.image = UIImage(named: topLeftImage)
+        self.topRightImageView.image = UIImage(named: topRightImage)
+        self.bottomLeftImageView.image = UIImage(named: bottomLeftImage)
+        self.bottomRightImageView.image = UIImage(named: bottomRightImageL)
     }
 }
 

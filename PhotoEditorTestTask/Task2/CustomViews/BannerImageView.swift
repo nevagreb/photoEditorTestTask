@@ -9,9 +9,8 @@ final class BannerImageView: UIImageView {
         configure()
     }
     
-    init(imageName: String) {
+    init() {
         super.init(frame: .zero)
-        image = UIImage(named: imageName)
         configure()
     }
     

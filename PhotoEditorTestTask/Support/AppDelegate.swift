@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // window is created in SceneDelegate
         } else {
             let window = UIWindow(frame: UIScreen.main.bounds)
-            window.rootViewController = Task3ViewController()
+            window.rootViewController = Task3Builder.build()
             window.makeKeyAndVisible()
             self.window = window
         }
