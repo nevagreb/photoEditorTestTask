@@ -2,7 +2,8 @@
 
 import UIKit
 
-final class GiftView: UIView{
+final class GiftView: UIView {
+    
     private let giftImageView = UIImageView()
     private let timerLabel = UILabel()
 

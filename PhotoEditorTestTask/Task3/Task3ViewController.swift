@@ -2,37 +2,24 @@
 
 import UIKit
 
-protocol DataSourceble: AnyObject {
-    func getHashtags() -> [Hashtag]
-    func getPhotos() -> [Photo]
-}
-
-final class Task3ViewController: UIViewController, DataSourceble {
+final class Task3ViewController: UIViewController {
     
     private let bannerView = BannerView()
-    private let photoVC = PhotoGridViewController()
+    private let photoGridView = PhotoGridView()
     private let giftView = GiftView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupView()
-        configureConstraint()
-    }
-    
-    private func setupView() {
         view.backgroundColor = .black
-        photoVC.delegate = self
+        setupConstraint()
     }
     
-    private func configureConstraint() {
-        addChild(photoVC)
+    private func setupConstraint() {
         view.addSubview(bannerView)
-        view.addSubview(photoVC.view)
+        view.addSubview(photoGridView)
         view.addSubview(giftView)
         
-        bannerView.translatesAutoresizingMaskIntoConstraints = false
-        photoVC.view.translatesAutoresizingMaskIntoConstraints = false
-        giftView.translatesAutoresizingMaskIntoConstraints = false
+        [bannerView, photoGridView, giftView].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         
         NSLayoutConstraint.activate([
             bannerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -40,26 +27,15 @@ final class Task3ViewController: UIViewController, DataSourceble {
             bannerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             bannerView.heightAnchor.constraint(equalToConstant: 108),
 
-            photoVC.view.topAnchor.constraint(equalTo: bannerView.bottomAnchor, constant: DS.Padding.xl),
-            photoVC.view.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            photoVC.view.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            photoVC.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            photoGridView.topAnchor.constraint(equalTo: bannerView.bottomAnchor, constant: DS.Padding.xl),
+            photoGridView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            photoGridView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            photoGridView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
-            giftView.trailingAnchor.constraint(equalTo: photoVC.view.trailingAnchor),
+            giftView.trailingAnchor.constraint(equalTo: photoGridView.trailingAnchor),
             giftView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             giftView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.25)
         ])
-        
-        photoVC.didMove(toParent: self)
-    }
-    
-    // MARK: - get data func
-    func getHashtags() -> [Hashtag] {
-        return Hashtag.mockData()
-    }
-    
-    func getPhotos() -> [Photo] {
-        return Photo.mockData() + Photo.mockData()
     }
 }
 
