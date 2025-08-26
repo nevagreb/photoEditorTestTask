@@ -9,6 +9,11 @@ final class GiftView: UIView {
 
     private var timer: Timer?
     private var endDate: Date?
+    private var isAnimating = false
+    
+    private var hasTimeRemaining: Bool {
+        (endDate?.timeIntervalSinceNow ?? 0) > 0
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -25,6 +30,20 @@ final class GiftView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         layer.cornerRadius = bounds.width/2
+    }
+    
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+        if window == nil {
+            // if left the screen
+            stopTimer()
+            giftImageView.layer.removeAllAnimations()
+            isAnimating = false
+        } else {
+            // if return to the screen
+            resumeTimerIfNeeded()
+            startAnimationIfNeeded()
+        }
     }
     
     deinit {
@@ -104,12 +123,9 @@ final class GiftView: UIView {
     }
     
     // MARK: - timer logic
-    private func startTimer(hours: Int = 0, minutes: Int = 0, seconds: Int = 0) {
-        let time = hours*3600 + minutes*60 + seconds
-        endDate = Date().addingTimeInterval(TimeInterval(time))
+    private func resumeTimerIfNeeded() {
+        guard timer == nil, endDate != nil else { return }
         updateLabel()
-        
-        timer?.invalidate()
         let t = Timer(timeInterval: 1, repeats: true) { [weak self] _ in
             self?.tick()
         }
@@ -120,6 +136,7 @@ final class GiftView: UIView {
     private func tick() {
         guard updateLabel() else {
             stopTimer()
+            stopAnimation()
             return
         }
     }
@@ -145,11 +162,21 @@ final class GiftView: UIView {
     }
 
     // MARK: - animation
+    
+    private func startAnimationIfNeeded() {
+        guard !isAnimating, hasTimeRemaining else { return }
+        isAnimating = true
+        animateGift()
+    }
+    
     private func animateGift() {
+        guard isAnimating, hasTimeRemaining, window != nil else { return }
         rotate(times: 3)
     }
     
     private func rotate(times: Int) {
+        guard isAnimating, hasTimeRemaining, window != nil else { return }
+
         guard times > 0 else {
             // pause
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
@@ -174,10 +201,20 @@ final class GiftView: UIView {
         })
     }
     
+    private func stopAnimation() {
+        isAnimating = false
+        giftImageView.layer.removeAllAnimations()
+    }
+    
     // MARK: - configure with data
     func configure(with gift: GiftDTO) {
-        startTimer(hours: gift.hours ?? 0, minutes: gift.minutes ?? 0, seconds: gift.seconds ?? 0)
-        animateGift()
+        let seconds = (gift.hours ?? 0) * 3600 + (gift.minutes ?? 0) * 60 + (gift.seconds ?? 0)
+        endDate = Date().addingTimeInterval(TimeInterval(seconds))
+        
+        if window != nil {
+            resumeTimerIfNeeded()
+            startAnimationIfNeeded()
+        }
     }
 }
 
