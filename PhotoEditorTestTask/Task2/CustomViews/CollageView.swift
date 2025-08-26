@@ -1,9 +1,4 @@
-//
-//  BannerView.swift
-//  PhotoEditorTestTask
-//
 //  Created by Kristina Grebneva on 21.08.2025.
-//
 
 import UIKit
 

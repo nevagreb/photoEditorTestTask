@@ -1,13 +1,8 @@
-//
-//  HashtagView.swift
-//  PhotoEditorTestTask
-//
 //  Created by Kristina Grebneva on 24.08.2025.
-//
 
 import UIKit
 
-class HashtagScrollView: UIView {
+final class HashtagsView: UIView {
     private var label = UILabel()
     private var buttons: [HashtagButton] = []
     private var stack = UIStackView()

@@ -1,16 +1,11 @@
-//
-//  PhotoGridViewController.swift
-//  PhotoEditorTestTask
-//
 //  Created by Kristina Grebneva on 24.08.2025.
-//
 
 import UIKit
 
 final class PhotoGridViewController: UIViewController {
     weak var delegate: DataSourceble?
     
-    private var hashtagsView = HashtagScrollView()
+    private var hashtagsView = HashtagsView()
     private var photos: [Photo] = []
     private var collectionView: UICollectionView!
     

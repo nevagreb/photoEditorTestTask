@@ -1,13 +1,8 @@
-//
-//  HashtagButton.swift
-//  PhotoEditorTestTask
-//
 //  Created by Kristina Grebneva on 25.08.2025.
-//
 
 import UIKit
 
-class HashtagButton: UIButton {
+final class HashtagButton: UIButton {
 
     override init(frame: CGRect) {
         super.init(frame: frame)

@@ -1,9 +1,4 @@
-//
-//  ViewController.swift
-//  PhotoEditorTestTask
-//
 //  Created by Kristina Grebneva on 21.08.2025.
-//
 
 import UIKit
 
@@ -54,8 +49,6 @@ final class Task3ViewController: UIViewController, DataSourceble {
             giftBannerVC.view.trailingAnchor.constraint(equalTo: photoVC.view.trailingAnchor),
             giftBannerVC.view.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             giftBannerVC.view.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.25)
-
-
         ])
         
         photoVC.didMove(toParent: self)
