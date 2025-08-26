@@ -4,6 +4,8 @@ import UIKit
 
 final class BannerLabel: UILabel {
 
+    override var text: String? { didSet { addSpacing() } }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
@@ -14,9 +16,10 @@ final class BannerLabel: UILabel {
         switch type {
         case .title:
             font = .systemFont(ofSize: DS.FontSize.bannerTitle, weight: .bold)
+            textColor = .white
         case .body:
             font = .systemFont(ofSize: DS.FontSize.bannerBody, weight: .regular)
-            alpha = 0.5
+            textColor = UIColor.white.withAlphaComponent(0.5)
         }
         configure()
     }
@@ -27,10 +30,18 @@ final class BannerLabel: UILabel {
     
     private func configure() {
         textAlignment = .left
-        textColor = .white
         numberOfLines = 0
         lineBreakMode = .byWordWrapping
-        adjustsFontSizeToFitWidth = true
+    }
+    
+    private func addSpacing(_ spacing: CGFloat = 3) {
+        guard let text, !text.isEmpty else {
+            attributedText = nil
+            return
+        }
+        let style = NSMutableParagraphStyle()
+        style.lineSpacing = spacing
+        attributedText = NSAttributedString(string: text, attributes: [.paragraphStyle: style])
     }
     
     enum TextType {

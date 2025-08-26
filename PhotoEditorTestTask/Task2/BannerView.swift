@@ -43,49 +43,16 @@ final class BannerView: UIView {
         addSubviews(textStack, collage)
         textStack.translatesAutoresizingMaskIntoConstraints = false
         collage.translatesAutoresizingMaskIntoConstraints = false
-        
-        let leadingPad = UILayoutGuide()
-        let trailingPad = UILayoutGuide()
-        let topPad = UILayoutGuide()
-        let bottomPad = UILayoutGuide()
-        addLayoutGuide(leadingPad)
-        addLayoutGuide(trailingPad)
-        addLayoutGuide(topPad)
-        addLayoutGuide(bottomPad)
 
         NSLayoutConstraint.activate([
-            leadingPad.leadingAnchor.constraint(equalTo: leadingAnchor),
-            leadingPad.topAnchor.constraint(equalTo: topAnchor),
-            leadingPad.bottomAnchor.constraint(equalTo: bottomAnchor),
-            leadingPad.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.05),
-
-            trailingPad.trailingAnchor.constraint(equalTo: trailingAnchor),
-            trailingPad.topAnchor.constraint(equalTo: topAnchor),
-            trailingPad.bottomAnchor.constraint(equalTo: bottomAnchor),
-            trailingPad.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.05),
-
-            topPad.topAnchor.constraint(equalTo: topAnchor),
-            topPad.leadingAnchor.constraint(equalTo: leadingAnchor),
-            topPad.trailingAnchor.constraint(equalTo: trailingAnchor),
-            topPad.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.05),   
-
-            bottomPad.bottomAnchor.constraint(equalTo: bottomAnchor),
-            bottomPad.leadingAnchor.constraint(equalTo: leadingAnchor),
-            bottomPad.trailingAnchor.constraint(equalTo: trailingAnchor),
-            bottomPad.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.05),
-
-            textStack.leadingAnchor.constraint(equalTo: leadingPad.trailingAnchor),
-            textStack.topAnchor.constraint(greaterThanOrEqualTo: topPad.bottomAnchor),
-            textStack.bottomAnchor.constraint(lessThanOrEqualTo: bottomPad.topAnchor),
             textStack.centerYAnchor.constraint(equalTo: centerYAnchor),
-
-            collage.trailingAnchor.constraint(equalTo: trailingPad.leadingAnchor),
-            collage.topAnchor.constraint(greaterThanOrEqualTo: topPad.bottomAnchor),
-            collage.bottomAnchor.constraint(lessThanOrEqualTo: bottomPad.topAnchor),
+            textStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            textStack.trailingAnchor.constraint(lessThanOrEqualTo: collage.leadingAnchor),
+            
             collage.centerYAnchor.constraint(equalTo: centerYAnchor),
-
-            textStack.trailingAnchor.constraint(equalTo: collage.leadingAnchor, constant: -DS.Padding.m),
-            collage.heightAnchor.constraint(equalTo: collage.widthAnchor, multiplier: 0.81)
+            collage.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -19),
+            collage.widthAnchor.constraint(equalToConstant: 98),
+            collage.heightAnchor.constraint(equalToConstant: 80),
         ])
         
         textStack.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)

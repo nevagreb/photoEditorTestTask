@@ -38,7 +38,7 @@ final class Task3ViewController: UIViewController, DataSourceble {
             bannerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             bannerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             bannerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            bannerView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.13),
+            bannerView.heightAnchor.constraint(equalToConstant: 108),
 
             photoVC.view.topAnchor.constraint(equalTo: bannerView.bottomAnchor, constant: DS.Padding.xl),
             photoVC.view.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
