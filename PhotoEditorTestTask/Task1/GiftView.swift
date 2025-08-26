@@ -2,41 +2,40 @@
 
 import UIKit
 
-final class GiftViewController: UIViewController {
+final class GiftView: UIView{
     private let giftImageView = UIImageView()
     private let timerLabel = UILabel()
-    private let stack = UIStackView()
 
     private var timer: Timer?
     private var endDate: Date?
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         configureContainer()
         configureGiftImage()
         configureTimerLabel()
         setConstraints()
         animateGift()
-        startCountdown(minutes: 30)
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layer.cornerRadius = bounds.width/2
+    }
+    
+    deinit {
         stopTimer()
         giftImageView.layer.removeAllAnimations()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        view.layer.cornerRadius = view.bounds.width/2
-    }
-    
-    deinit { stopTimer() }
-    
     private func configureContainer() {
-        view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-        view.clipsToBounds = true
-        if #available(iOS 13.0, *) { view.layer.cornerCurve = .continuous }
+        backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        clipsToBounds = true
+        if #available(iOS 13.0, *) { layer.cornerCurve = .continuous }
     }
     
     private func configureGiftImage() {
@@ -48,33 +47,34 @@ final class GiftViewController: UIViewController {
     private func configureTimerLabel() {
         timerLabel.textColor = .white
         timerLabel.font = .monospacedDigitSystemFont(ofSize: 22, weight: .semibold)
-        timerLabel.adjustsFontForContentSizeCategory = true
         timerLabel.minimumScaleFactor = 0.5
         timerLabel.adjustsFontSizeToFitWidth = true
         timerLabel.numberOfLines = 1
+        timerLabel.text = "00:00:00"
     }
     
     private func setConstraints() {
-        view.addSubview(stack)
-        stack.axis = .vertical
-        stack.alignment = .center
-        stack.spacing = DS.Padding.s
+        addSubviews(giftImageView, timerLabel)
+        [giftImageView, timerLabel].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         
-        stack.addArrangedSubview(giftImageView)
-        stack.addArrangedSubview(timerLabel)
-        
-        [stack, giftImageView, timerLabel].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+        let padding = UILayoutGuide()
+        addLayoutGuide(padding)
         
         NSLayoutConstraint.activate([
-            stack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            stack.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -DS.Padding.m),
-            stack.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: DS.Padding.l),
-            stack.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -DS.Padding.l),
-            
-            giftImageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.63),
+            giftImageView.topAnchor.constraint(equalTo: topAnchor),
+            giftImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            giftImageView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.63),
             giftImageView.heightAnchor.constraint(equalTo: giftImageView.widthAnchor),
             
-            view.heightAnchor.constraint(equalTo: view.widthAnchor)
+            padding.topAnchor.constraint(equalTo: giftImageView.bottomAnchor),
+            padding.centerXAnchor.constraint(equalTo: centerXAnchor),
+            padding.heightAnchor.constraint(equalTo: giftImageView.heightAnchor, multiplier: 0.05),
+            
+            timerLabel.topAnchor.constraint(equalTo: padding.bottomAnchor),
+            timerLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            timerLabel.widthAnchor.constraint(equalTo: giftImageView.widthAnchor, multiplier: 0.87),
+            
+            heightAnchor.constraint(equalTo: widthAnchor)
         ])
         
         addPriorities()
@@ -85,8 +85,26 @@ final class GiftViewController: UIViewController {
         timerLabel.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
     }
     
+    // text stroke
+    private func outlinedText(_ text: String,
+                              font: UIFont,
+                              fill: UIColor = .white,
+                              stroke: UIColor = .black,
+                              strokeWidth: CGFloat? = nil) -> NSAttributedString {
+        let w = strokeWidth ?? max(1, font.pointSize * 0.12)
+        return NSAttributedString(
+            string: text,
+            attributes: [
+                .font: font,
+                .foregroundColor: fill,
+                .strokeColor: stroke,
+                .strokeWidth: -w
+            ]
+        )
+    }
+    
     // MARK: - timer logic
-    private func startCountdown(hours: Int = 0, minutes: Int = 0, seconds: Int = 0) {
+    func startTimer(hours: Int = 0, minutes: Int = 0, seconds: Int = 0) {
         let time = hours*3600 + minutes*60 + seconds
         endDate = Date().addingTimeInterval(TimeInterval(time))
         updateLabel()
@@ -116,25 +134,23 @@ final class GiftViewController: UIViewController {
             return false
         }
         
-        timerLabel.text = remaining.asTimeString()
+        let text = remaining.asTimeString()
+        timerLabel.attributedText = outlinedText(text, font: timerLabel.font)
         return true
     }
     
-    private func stopTimer() {
+    func stopTimer() {
         timer?.invalidate()
         timer = nil
     }
-}
 
 // MARK: - animation
-extension GiftViewController {
-    func animateGift() {
+    private func animateGift() {
         rotate(times: 3)
     }
     
     private func rotate(times: Int) {
         guard times > 0 else {
-            
             // pause
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
                 self?.animateGift()

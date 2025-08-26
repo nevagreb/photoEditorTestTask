@@ -11,7 +11,7 @@ final class Task3ViewController: UIViewController, DataSourceble {
     
     private let bannerView = BannerView()
     private let photoVC = PhotoGridViewController()
-    private let giftBannerVC = GiftViewController()
+    private let giftView = GiftView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,14 +26,13 @@ final class Task3ViewController: UIViewController, DataSourceble {
     
     private func configureConstraint() {
         addChild(photoVC)
-        addChild(giftBannerVC)
         view.addSubview(bannerView)
         view.addSubview(photoVC.view)
-        view.addSubview(giftBannerVC.view)
+        view.addSubview(giftView)
         
         bannerView.translatesAutoresizingMaskIntoConstraints = false
         photoVC.view.translatesAutoresizingMaskIntoConstraints = false
-        giftBannerVC.view.translatesAutoresizingMaskIntoConstraints = false
+        giftView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             bannerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -46,13 +45,12 @@ final class Task3ViewController: UIViewController, DataSourceble {
             photoVC.view.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             photoVC.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
-            giftBannerVC.view.trailingAnchor.constraint(equalTo: photoVC.view.trailingAnchor),
-            giftBannerVC.view.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            giftBannerVC.view.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.25)
+            giftView.trailingAnchor.constraint(equalTo: photoVC.view.trailingAnchor),
+            giftView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            giftView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.25)
         ])
         
         photoVC.didMove(toParent: self)
-        giftBannerVC.didMove(toParent: self)
     }
     
     // MARK: - get data func
