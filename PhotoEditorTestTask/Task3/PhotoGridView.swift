@@ -2,16 +2,16 @@
 
 import UIKit
 
-final class PhotoGridView: UIView, UICollectionViewDataSource {
+final class PhotoGridView: UIView, UICollectionViewDataSource, PhotoLayoutDelegate {
     
     private let hashtagsView = HashtagsView()
     private let collectionView: UICollectionView
     private let layout = PhotoLayout()
-    private var lastWidth: CGFloat = 0
     
+    private let aspectCache = NSCache<NSString, NSNumber>()
+
     private var photos: [Photo] = [] {
         didSet {
-            layout.configureHeights(for: photos)
             collectionView.reloadData()
         }
     }
@@ -27,23 +27,12 @@ final class PhotoGridView: UIView, UICollectionViewDataSource {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        let width = bounds.width
-        let scale = window?.screen.scale ?? UIScreen.main.scale
-        let onePixel: CGFloat = 1.0 / scale
-
-        if abs(width - lastWidth) > onePixel {
-            lastWidth = width
-            layout.configureHeights(for: photos)
-            collectionView.collectionViewLayout.invalidateLayout()
-        }
-    }
-    
     private func configure() {
         backgroundColor = .black
-        collectionView.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: PhotoCollectionViewCell.reusedId)
+        aspectCache.countLimit = 1000
+        layout.delegate = self
         collectionView.dataSource = self
+        collectionView.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: PhotoCollectionViewCell.reusedId)
         collectionView.backgroundColor = .clear
     }
     
@@ -82,8 +71,28 @@ final class PhotoGridView: UIView, UICollectionViewDataSource {
         return cell
     }
     
+    // MARK: - PhotoLayoutDelegate
+    // func returns photo aspectRatio and caches it
+    func collectionView(_ collectionView: UICollectionView,
+                            layout: PhotoLayout,
+                            aspectRatioForItemAt indexPath: IndexPath) -> CGFloat {
+            let name = photos[indexPath.item].name as NSString
+
+            if let cached = aspectCache.object(forKey: name) {
+                return CGFloat(truncating: cached)
+            }
+            guard let img = UIImage(named: name as String), img.size.width > 0 else {
+                return 1
+            }
+            let ratio = img.size.height / img.size.width
+            aspectCache.setObject(NSNumber(value: Double(ratio)), forKey: name)
+            return ratio
+        }
+    
     // MARK: - configure with data
-    func configure(with photos: [Photo]) {
+    @MainActor
+    func setPhotos(_ photos: [Photo]) {
+        aspectCache.removeAllObjects()
         self.photos = photos
     }
 }

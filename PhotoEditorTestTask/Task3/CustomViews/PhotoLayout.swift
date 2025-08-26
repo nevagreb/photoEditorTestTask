@@ -2,9 +2,16 @@
 
 import UIKit
 
+protocol PhotoLayoutDelegate: AnyObject {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout: PhotoLayout,
+                        aspectRatioForItemAt indexPath: IndexPath) -> CGFloat
+}
+
 final class PhotoLayout: UICollectionViewLayout {
     
-    var itemHeights: [IndexPath: CGFloat] = [:]
+    weak var delegate: PhotoLayoutDelegate?
+
     let numberOfColumns = 2
     let padding = DS.Padding.m
     
@@ -36,7 +43,10 @@ final class PhotoLayout: UICollectionViewLayout {
                 let indexPath = IndexPath(item: item, section: section)
                 
                 let column = yOffset.enumerated().min(by: { $0.element < $1.element })!.offset
-                let height = itemHeights[indexPath] ?? DS.LayoutConstants.defaultItemHeight
+                
+                let aspect = delegate?.collectionView(collectionView, layout: self, aspectRatioForItemAt: indexPath) ?? 1
+                                
+                let height = max(1, columnWidth * aspect)
                 
                 let frame = CGRect(x: xOffset[column],
                                    y: yOffset[column],
@@ -67,30 +77,14 @@ final class PhotoLayout: UICollectionViewLayout {
     }
     
     override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
-        return true
-    }
+            guard let cv = collectionView else { return false }
+            return cv.bounds.width != newBounds.width
+        }
     
     override func invalidateLayout() {
         super.invalidateLayout()
         cache.removeAll()
         contentHeight = 0
     }
-    
-    func configureHeights(for photos: [Photo]) {
-        guard let collectionView else { return }
-        itemHeights.removeAll()
-        
-        let width = collectionView.bounds.width
-        let columnWidth = (width - CGFloat(numberOfColumns - 1) * padding) / CGFloat(numberOfColumns)
-        
-        for (i, photo) in photos.enumerated() {
-            if let image = UIImage(named: photo.name) {
-                let aspect = image.size.height / image.size.width
-                let height = columnWidth * aspect
-                itemHeights[IndexPath(item: i, section: 0)] = height
-            }
-        }
-        
-        invalidateLayout()
-    }
 }
+

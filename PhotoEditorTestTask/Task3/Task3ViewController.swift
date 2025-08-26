@@ -12,6 +12,7 @@ final class Task3ViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .black
         setupConstraint()
+        photoGridView.setPhotos(Photo.mockData())
     }
     
     private func setupConstraint() {
